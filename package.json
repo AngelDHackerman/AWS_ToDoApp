@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/AngelDHackerman/AWS_ToDoApp/issues"
   },
-  "homepage": "https://github.com/AngelDHackerman/AWS_ToDoApp#readme"
+  "homepage": "https://github.com/AngelDHackerman/AWS_ToDoApp#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1459.0",
+    "dotenv": "^16.3.1"
+  }
 }
