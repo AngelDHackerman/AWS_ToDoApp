@@ -12,8 +12,11 @@ export class DynamoDBTable extends cdk.Construct {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,  // Capacidad bajo demanda 
       removalPolicy: cdk.RemovalPolicy.DESTROY,  // Elimina la tabla si se elimina el stack
       timeToLiveAttribute: 'expiryDate',  // Atributo TTL para eliminacion automatica(necesario agregar el timestamp en los elementos agregados)
-      pointInTimeRecovery: true,  // Punto de recuperacion (proteje las tablas de eliminaciones o modificiaciones accidentales)
       
+      // Punto de recuperacion (proteje las tablas de eliminaciones o modificiaciones accidentales)
+      pointInTimeRecovery: true,  
+      // Habilitar un stream de DynamoDB y mostrar ambas imágenes (anterior y nueva)
+      stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
     })
   }
 }
