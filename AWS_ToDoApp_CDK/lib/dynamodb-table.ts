@@ -3,10 +3,13 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
 export class DynamoDBTable extends Construct { 
+  public readonly table: dynamodb.Table;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) { 
     super(scope, id);
 
-    // Creating the DynamoDb table named: ToDoTable
+    // 2. Asigna la tabla que creas a la propiedad: (modificar luego)
+
     new dynamodb.Table(this, 'ToDoTable', { 
       partitionKey: {name: 'taskId', type: dynamodb.AttributeType.STRING },
       sortKey: {name: 'dueDate', type: dynamodb.AttributeType.STRING},  // Clave de clasificacion basada en la fecha de vencimiento
