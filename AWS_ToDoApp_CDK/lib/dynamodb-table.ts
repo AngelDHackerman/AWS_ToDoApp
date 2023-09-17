@@ -10,6 +10,9 @@ export class DynamoDBTable extends cdk.Construct {
       partitionKey: {name: 'taskId', type: dynamodb.AttributeType.STRING },
       sortKey: {name: 'dueDate', type: dynamodb.AttributeType.STRING},  // Clave de clasificacion basada en la fecha de vencimiento
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,  // Capacidad bajo demanda 
+      removalPolicy: cdk.RemovalPolicy.DESTROY,  // Elimina la tabla si se elimina el stack
+      timeToLiveAttribute: 'expiryDate',  // Atributo TTL para eliminacion automatica(necesario agregar el timestamp en los elementos agregados)
+      pointInTimeRecovery: true,  // Punto de recuperacion (proteje las tablas de eliminaciones o modificiaciones accidentales)
       
     })
   }
