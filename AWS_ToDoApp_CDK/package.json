@@ -22,8 +22,8 @@
   "dependencies": {
     "@aws-cdk/aws-dynamodb": "^1.204.0",
     "@aws-cdk/aws-lambda": "^1.204.0",
-    "aws-cdk-lib": "2.96.2",
-    "constructs": "^10.0.0",
+    "aws-cdk-lib": "^2.96.2",
+    "constructs": "^10.2.70",
     "source-map-support": "^0.5.21"
   }
 }

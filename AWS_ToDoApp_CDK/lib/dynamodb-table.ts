@@ -1,8 +1,9 @@
-import * as cdk from '@aws-cdk/core';
-import * as dynamodb from '@aws-cdk/aws-dynamodb';
+import * as cdk from 'aws-cdk-lib';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import { Construct } from 'constructs';
 
-export class DynamoDBTable extends cdk.Construct { 
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) { 
+export class DynamoDBTable extends Construct { 
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) { 
     super(scope, id);
 
     // Creating the DynamoDb table named: ToDoTable
