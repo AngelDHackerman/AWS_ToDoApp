@@ -1,3 +1,5 @@
+// Esta base de datos tendra una llave primaria con los atributos de taskId y dueDate, asi tambien un expiryDate (de 7 dias segun nuestra funcion lambda)
+
 import * as cdk from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';

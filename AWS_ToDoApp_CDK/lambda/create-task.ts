@@ -1,3 +1,6 @@
+// Esta funcion crea task en la base de datos de DynamoDB
+//  tendrá un TTL de 7 días desde el momento de su creación. 
+
 interface LambdaEvent {
   body: string;
 }
