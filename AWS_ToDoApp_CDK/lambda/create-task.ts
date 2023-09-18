@@ -18,6 +18,7 @@ exports.handler = async (event: LambdaEvent) => {
       taskId,
       dueDate,
       expiryDate: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // TTL de 7 días
+      status: 'pending'
     },
   };
 
