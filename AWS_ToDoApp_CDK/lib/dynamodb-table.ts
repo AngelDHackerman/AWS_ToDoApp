@@ -8,9 +8,7 @@ export class DynamoDBTable extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) { 
     super(scope, id);
 
-    // 2. Asigna la tabla que creas a la propiedad: (modificar luego)
-
-    new dynamodb.Table(this, 'ToDoTable', { 
+    this.table = new dynamodb.Table(this, 'ToDoTable', { 
       partitionKey: {name: 'taskId', type: dynamodb.AttributeType.STRING },
       sortKey: {name: 'dueDate', type: dynamodb.AttributeType.STRING},  // Clave de clasificacion basada en la fecha de vencimiento
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,  // Capacidad bajo demanda 
