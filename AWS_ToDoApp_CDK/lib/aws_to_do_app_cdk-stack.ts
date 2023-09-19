@@ -32,6 +32,7 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
       },
     });
 
-    
+    // Otorgar permisos a la funcion Lambda para leer de la tabla DynamoDB
+    dynamoTable.table.grantReadData(getTaskFunction);
   }
 }
