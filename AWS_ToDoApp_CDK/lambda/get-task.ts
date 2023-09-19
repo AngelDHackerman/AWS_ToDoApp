@@ -19,7 +19,7 @@ exports.handler = async (event: LambdaEvent) => {
   const status = event.queryStringParameters?.status;
 
   // Validar el status si esta presente, viendo si status es una clave del enum TaskStatus
-  if (status && !(status in TaskStatus)) { 
+  if (status && !Object.values(TaskStatus).includes(status as TaskStatus)) { 
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'Invalid status value' })
