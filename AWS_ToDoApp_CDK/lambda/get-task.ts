@@ -1,4 +1,7 @@
 // Esta lambda funcion, tomara las tareas segun su status: pending, completed, working, deleted.
+// Con este código, la función Lambda get-task requerirá un parámetro status en la consulta. 
+// Si no se proporciona, devolverá un error. Si se proporciona un status, 
+// la función usará el GSI StatusIndex para recuperar las tareas que coincidan con ese status.
 
 import { TaskStatus } from './task-status'
 
@@ -12,7 +15,7 @@ interface LambdaEvent {
 import * as AWS from 'aws-sdk';
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
-export.handler = async (event: LambdaEvent) => {
+exports.handler = async (event: LambdaEvent) => {
   const status = event.queryStringParameters?.status;
 
   // Validar el status si esta presente, viendo si status es una clave del enum TaskStatus
@@ -39,5 +42,19 @@ export.handler = async (event: LambdaEvent) => {
     ExpressionAttributeValues: {
       ':statusValue': status
     }
+  };
+
+  try {
+    const result = await dynamo.query(params).promise();
+    return { 
+      statusCode: 200,
+      body: JSON.stringify({ tasks: result.Items }),
+    }
+  } catch (error) {
+    const errMsg = (error as Error).message;
+    return { 
+      statusCode: 500,
+      body: JSON.stringify({ error: errMsg })
+    };
   }
-}
+};
