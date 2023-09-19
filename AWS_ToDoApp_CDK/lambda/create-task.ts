@@ -17,7 +17,15 @@ enum TaskStatus {
 
 exports.handler = async (event: LambdaEvent) => {
   const body = JSON.parse(event.body);
-  const { taskId, dueDate } = body;
+  const { taskId, dueDate, status } = body;
+
+  // Verifica si el status proporcionado es valido
+  if (!Object.values(TaskStatus).includes(status)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: 'Invalid status value' }),
+    }
+  }
 
   const params = {
     TableName: process.env.TABLE_NAME, // El nombre de la tabla se pasa como variable de entorno
@@ -25,8 +33,7 @@ exports.handler = async (event: LambdaEvent) => {
       taskId,
       dueDate,
       expiryDate: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // TTL de 7 días
-      // todo: needed to change this code, it has to accept several status
-      status: 'pending'
+      status: status || TaskStatus.PENDING  // si no se proporciona un status, se establecera en 'peding' por defecto. 
     },
   };
 
