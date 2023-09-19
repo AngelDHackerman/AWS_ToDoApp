@@ -3,7 +3,6 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { DynamoDBTable } from './dynamodb-table';  
 import * as path from 'path'; 
-import { LambdaApplication } from 'aws-cdk-lib/aws-codedeploy';
 
 export class AwsToDoAppCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -21,6 +20,18 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     });
 
     // Otorgar permisos a la funcion Lambda para escribir en la tabla DynamoDB
-    dynamoTable.table.grantWriteData(createTaskFunction)
+    dynamoTable.table.grantWriteData(createTaskFunction);
+
+    // Definir la nueva funcion Lambda get-task
+    const getTaskFunction = new lambda.Function(this, 'GetTaskFunction', { 
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'get-task.handler',
+      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
+      environment: { 
+        TABLE_NAME: dynamoTable.table.tableName
+      },
+    });
+
+    
   }
 }
