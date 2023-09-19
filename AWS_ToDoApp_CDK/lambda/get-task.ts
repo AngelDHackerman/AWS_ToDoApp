@@ -38,9 +38,9 @@ exports.handler = async (event: LambdaEvent) => {
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!, // con el ! le decimos "TABLE_NAME" siempre tendra un nombre y no estar null o undefined. 
     IndexName: 'StatusIndex',
-    KeyConditionExpression: 'status = :statusValue',
+    KeyConditionExpression: '#statusAttribute = :statusValue',  // Usamos un alias para 'status'
     ExpressionAttributeValues: {
-      ':statusValue': status
+      '#statusAttribute': 'status'  // Definimos el alias
     }
   };
 
