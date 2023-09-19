@@ -20,6 +20,24 @@ export.handler = async (event: LambdaEvent) => {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'Invalid status value' })
+    };
+  }
+
+  // Si no se proporciona un status, devuelve un error
+  if (!status) { 
+    return { 
+      statusCode: 400,
+      body: JSON.stringify({ error: 'Status parameter is requiered' }),
+    };
+  }
+
+  // Configura los parametros para la consulta usando el GSI global secondary index
+  const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
+    TableName: process.env.TABLE_NAME!, // con el ! le decimos "TABLE_NAME" siempre tendra un nombre y no estar null o undefined. 
+    IndexName: 'StatusIndex',
+    KeyConditionExpression: 'status = :statusValue',
+    ExpressionAttributeValues: {
+      ':statusValue': status
     }
   }
 }
