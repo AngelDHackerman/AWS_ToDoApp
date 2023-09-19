@@ -8,18 +8,11 @@ interface LambdaEvent {
 const AWS = require("aws-sdk");
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
-enum TaskStatus { 
-  PENDING = 'pending',
-  WORKING = 'working',
-  COMPLETED = 'completed',
-  DELETED = 'deleted',
-}
-
 exports.handler = async (event: LambdaEvent) => {
   const body = JSON.parse(event.body);
   const { taskId, dueDate, status } = body;
 
-  // Verifica si el status proporcionado es valido
+  // Verifica si el status proporcionado es valido, sino lanzara un error
   if (!Object.values(TaskStatus).includes(status)) {
     return {
       statusCode: 400,
