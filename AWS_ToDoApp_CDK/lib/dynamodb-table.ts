@@ -22,5 +22,13 @@ export class DynamoDBTable extends Construct {
       // Habilitar un stream de DynamoDB y mostrar ambas imágenes (anterior y nueva)
       stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
     })
+
+    // Agregar un indice global secundario para el atributo 'status'
+    this.table.addGlobalSecondaryIndex({
+      indexName: 'StatusIndex',  // Nombre unico para el GSI 
+      partitionKey: { name: 'status', type: dynamodb.AttributeType.STRING },  // clave de particion para el GSI basada en el estado
+      sortKey: { name: 'dueDate', type: dynamodb.AttributeType.STRING },  // Usamos 'dueDate' como clave de clasificacion para el GSI
+      projectionType: dynamodb.ProjectionType.ALL, // tipo de proyeccion (en este caso, queremos todos los atributos del item)
+    });
   }
 }
