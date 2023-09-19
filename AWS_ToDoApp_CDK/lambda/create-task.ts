@@ -8,6 +8,13 @@ interface LambdaEvent {
 const AWS = require("aws-sdk");
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
+enum TaskStatus { 
+  PENDING = 'pending',
+  WORKING = 'working',
+  COMPLETED = 'completed',
+  DELETED = 'deleted',
+}
+
 exports.handler = async (event: LambdaEvent) => {
   const body = JSON.parse(event.body);
   const { taskId, dueDate } = body;
@@ -18,6 +25,7 @@ exports.handler = async (event: LambdaEvent) => {
       taskId,
       dueDate,
       expiryDate: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // TTL de 7 días
+      // todo: needed to change this code, it has to accept several status
       status: 'pending'
     },
   };
