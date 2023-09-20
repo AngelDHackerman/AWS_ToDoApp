@@ -32,23 +32,34 @@
 
 ### Orden de implementación sugerido:
 
-Configuración de DynamoDB:
-Crea la tabla de DynamoDB programáticamente usando el SDK de AWS.
-Define los atributos y las claves de la tabla.
-Funciones Lambda:
+1. __Configuración de DynamoDB:__
 
-Comienza con la función createTask para poder agregar tareas a tu base de datos.
-Continúa con getTasks y getTaskById para poder leer las tareas.
-Luego, implementa updateTask para modificar tareas.
-Finalmente, implementa deleteTask para eliminar tareas.
-API Gateway:
+* Crea la tabla de DynamoDB programáticamente usando el SDK de AWS.
 
-Una vez que tengas tus funciones Lambda listas, puedes configurar API Gateway para exponer estas funciones como endpoints HTTP.
-Crea rutas para cada función (por ejemplo, POST para crear, GET para leer, PUT para actualizar, DELETE para eliminar).
-Integración:
+* Define los atributos y las claves de la tabla.
 
-Integra tus funciones Lambda con API Gateway.
-Configura los permisos necesarios para que API Gateway pueda invocar tus funciones Lambda.
-Pruebas:
+2. __Funciones Lambda:__
 
-Realiza pruebas para asegurarte de que cada endpoint funcione correctamente y de que las tareas se almacenen, recuperen, modifiquen y eliminen correctamente en/from DynamoDB.
+* Comienza con la función `createTask` para poder agregar tareas a tu base de datos.
+
+* Continúa con `getTasks` y `getTaskById` para poder leer las tareas.
+
+* Luego, implementa `updateTask` para modificar tareas.
+
+* Finalmente, implementa `deleteTask` para eliminar tareas.
+
+3. __API Gateway:__
+
+* Una vez que tengas tus funciones Lambda listas, puedes configurar API Gateway para exponer estas funciones como endpoints HTTP.
+
+* Crea rutas para cada función (por ejemplo, POST para crear, GET para leer, PUT para actualizar, DELETE para eliminar).
+
+4. __Integración:__
+
+* Integra tus funciones Lambda con API Gateway.
+
+* Configura los permisos necesarios para que API Gateway pueda invocar tus funciones Lambda.
+
+5. __Pruebas:__
+
+* Realiza pruebas para asegurarte de que cada endpoint funcione correctamente y de que las tareas se almacenen, recuperen, modifiquen y eliminen correctamente en/from DynamoDB.
