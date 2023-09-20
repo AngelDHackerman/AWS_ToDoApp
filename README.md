@@ -34,11 +34,15 @@
 
 1. __Configuración de DynamoDB:__
 
-* Crea la tabla de DynamoDB programáticamente usando el SDK de AWS.
+* Implementa el patrón Singleton para la conexión a DynamoDB.
+
+* Crea la tabla de DynamoDB programáticamente usando el SDK de AWS con la conexión Singleton.
 
 * Define los atributos y las claves de la tabla.
 
 2. __Funciones Lambda:__
+
+* Implementa la inyección de dependencia para inyectar la conexión de DynamoDB en las funciones.
 
 * Comienza con la función `createTask` para poder agregar tareas a tu base de datos.
 
@@ -48,18 +52,20 @@
 
 * Finalmente, implementa `deleteTask` para eliminar tareas.
 
-3. __API Gateway:__
+3. __API Gateway con Proxies:__
 
-* Una vez que tengas tus funciones Lambda listas, puedes configurar API Gateway para exponer estas funciones como endpoints HTTP.
+* Crea un único recurso proxy en API Gateway (por ejemplo, `{proxy+}`) que capturará todas las rutas y métodos.
 
-* Crea rutas para cada función (por ejemplo, POST para crear, GET para leer, PUT para actualizar, DELETE para eliminar).
+* Integra este recurso proxy con una única función Lambda.
+
+* Dentro de esta función Lambda, en función de la ruta y el método HTTP, invoca la función Lambda correspondiente (por ejemplo, `createTask`, `getTasks`, etc.).
 
 4. __Integración:__
 
-* Integra tus funciones Lambda con API Gateway.
+* Asegúrate de que tu función Lambda proxy tenga los permisos necesarios para invocar otras funciones Lambda.
 
-* Configura los permisos necesarios para que API Gateway pueda invocar tus funciones Lambda.
+* Configura los permisos para que API Gateway pueda invocar tu función Lambda proxy.
 
 5. __Pruebas:__
 
-* Realiza pruebas para asegurarte de que cada endpoint funcione correctamente y de que las tareas se almacenen, recuperen, modifiquen y eliminen correctamente en/from DynamoDB.
+* Realiza pruebas para asegurarte de que cada ruta y método funcione correctamente a través del proxy.
