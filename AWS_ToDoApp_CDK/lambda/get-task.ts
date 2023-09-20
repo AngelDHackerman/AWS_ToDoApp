@@ -3,6 +3,8 @@
 // Si no se proporciona, devolverá un error. Si se proporciona un status, 
 // la función usará el GSI StatusIndex para recuperar las tareas que coincidan con ese status.
 
+// TODO: Refactor for dependency injection, now wer are crearting an instance of the DynamoDb table for each lambda function
+
 import { TaskStatus } from './task-status'
 
 // Lambda interface que aceptara un parametro opcional `status` para filtrar tareas. 

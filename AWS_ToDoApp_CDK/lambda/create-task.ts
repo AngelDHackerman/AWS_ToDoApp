@@ -1,6 +1,8 @@
 // Esta funcion crea task en la base de datos de DynamoDB
 //  tendrá un TTL de 7 días desde el momento de su creación. 
 
+// TODO: Refactor for dependency injection, now wer are crearting an instance of the DynamoDb table for each lambda function
+
 import { TaskStatus } from "./task-status";
 
 interface LambdaEvent {
