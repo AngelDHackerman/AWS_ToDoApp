@@ -18,19 +18,20 @@ exports.handler = async (event: LambdaEvent) => {
   }
 
   // Configurar los parametros para la consulta
-  const params: AWS.DynamoDB.DocumentClient.GetItemInput = { 
+  const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!,
-    Key: { 
-      taskId: taskId
+    KeyConditionExpression: "taskId = :taskIdValue",
+    ExpressionAttributeValues: { 
+      ":taskIdValue": taskId
     }
   };
 
   try {
-    const result = await dynamo.get(params).promise()
-    if (result.Item) { 
+    const result = await dynamo.query(params).promise()
+    if (result.Items && result.Items.length > 0) { 
       return { 
         statusCode: 200,
-        body: JSON.stringify(result.Item),
+        body: JSON.stringify(result.Items[0]),
       };
     } else { 
       return { 
