@@ -22,7 +22,7 @@ exports.handler = async (event: LambdaEvent) => {
   }
 
   // TODO: agregar una validacion si el taskID existe en la base de datos. 
-  // codigo aqui. 
+  // ? codigo helper aqui. 
 
   // Configurar los parametros para la consulta
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 

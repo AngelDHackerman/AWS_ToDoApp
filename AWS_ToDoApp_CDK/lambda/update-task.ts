@@ -25,8 +25,8 @@ exports.handler = async (event: LambdaEvent) => {
     };
   }
 
-  // Verificar si el taskId recibido existe en la base de datos
-  // const getItemParams: 
+  // todo: Verificar si el taskId recibido existe en la base de datos
+  // ? codigo helper aqui. 
 
   const params: AWS.DynamoDB.DocumentClient.UpdateItemInput = { 
     TableName: process.env.TABLE_NAME!,
