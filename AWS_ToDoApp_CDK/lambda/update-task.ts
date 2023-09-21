@@ -10,19 +10,22 @@ interface LambdaEvent {
   };
   body: string
 }
-
+// ?: agregando el codigo para validacion de taskID existente o inexistente
 exports.handler = async (event: LambdaEvent) => { 
   const taskId = event.pathParameters?.taskId;
   const body = JSON.parse(event.body);
   const { status, dueDate } = body;
 
-  // todo: agregar una validacion para cuando se recibe un ID, pero no esta en la base de datos.
+  // Validacion si se recibe un taskId
   if (!taskId) { 
     return { 
       statusCode: 400,
       body: JSON.stringify( { error: 'Task ID is required'})
     };
   }
+
+  // Verificar si el taskId recibido existe en la base de datos
+  // const getItemParams: 
 
   const params: AWS.DynamoDB.DocumentClient.UpdateItemInput = { 
     TableName: process.env.TABLE_NAME!,
