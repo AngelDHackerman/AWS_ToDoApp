@@ -1,6 +1,7 @@
 
 // TODO: Refactor for dependency injection, now wer are crearting an instance of the DynamoDb table for each lambda function
 
+import { validateTaskId } from '../helpers/helpers';
 import * as AWS from 'aws-sdk';
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
