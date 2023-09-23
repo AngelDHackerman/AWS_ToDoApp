@@ -1,3 +1,6 @@
+
+// todo: mejorar para que busque por ambos parametros taskId y dueDate, buscar por solo 1 elemento no funciona bien.
+
 import * as AWS from 'aws-sdk';
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
