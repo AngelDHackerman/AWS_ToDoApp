@@ -25,14 +25,8 @@ exports.handler = async (event: LambdaEvent) => {
     };
   }
 
-  // todo: Verificar si el taskId recibido existe en la base de datos
-  const isValidTaskId = await validateTaskId(taskId, process.env.TABLE_NAME!)
-  if (!isValidTaskId) { 
-    return { 
-      statusCode: 400,
-      body: JSON.stringify({ error: 'Task ID not found in the database' }),
-    }
-  }
+  // Verificar si el taskId recibido existe en la base de datos
+  // const getItemParams: 
 
   const params: AWS.DynamoDB.DocumentClient.UpdateItemInput = { 
     TableName: process.env.TABLE_NAME!,

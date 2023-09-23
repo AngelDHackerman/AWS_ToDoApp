@@ -21,15 +21,9 @@ exports.handler = async (event: LambdaEvent) => {
       body: JSON.stringify({ error: 'Task ID is required' }),
     };
   }
-  
-  // validacion si el taskID existe en la base de datos. 
-  const isValidTaskId = await validateTaskId(taskId, process.env.TABLE_NAME!)
-  if (!isValidTaskId) { 
-    return { 
-      statusCode: 400,
-      body: JSON.stringify({ error: 'Task ID not found in the database' }),
-    }
-  }
+
+  // TODO: agregar una validacion si el taskID existe en la base de datos. 
+  // codigo aqui. 
 
   // Configurar los parametros para la consulta
   const params: AWS.DynamoDB.DocumentClient.GetItemInput = { 
