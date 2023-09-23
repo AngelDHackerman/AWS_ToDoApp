@@ -43,6 +43,23 @@ exports.handler = async (event: LambdaEvent) => {
     },
   };
 
+  // Verificar si el taskId ya existe en la base de datos
+  const checkParams: AWS.DynamoDB.DocumentClient.QueryInput = { 
+    TableName: process.env.TABLE_NAME!,
+    KeyConditionExpression: "taskId = :taskIdValue",
+    ExpressionAttributeValues: { 
+      ":taskIdValue": taskId
+    },
+  };
+
+  const checkResult = await dynamo.query(checkParams).promise();
+  if (checkResult.Items && checkResult.Items.length > 0) { 
+    return { 
+      statusCode: 400,
+      body: JSON.stringify({ error: "Task ID already exists" }),
+    };
+  }
+
   try {
     await dynamo.put(params).promise();
     return {

@@ -22,9 +22,6 @@ exports.handler = async (event: LambdaEvent) => {
     };
   }
 
-  // TODO: agregar una validacion si el taskID existe en la base de datos. Buscar por ambos parametros taskId y dueDate (trabajar solo por 1 ID no funciono) 
-  // codigo aqui. 
-
   // Configurar los parámetros para la consulta
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!,
@@ -44,7 +41,7 @@ exports.handler = async (event: LambdaEvent) => {
     } else { 
       return { 
         statusCode: 404,
-        body: JSON.stringify({ error: 'Task not found' }),
+        body: JSON.stringify({ error: 'Task not found' }),  // ? si la task no existe, arroja este error diciendo que la task no existe.
       };
     }
   } catch (error) {
