@@ -14,22 +14,29 @@ interface LambdaEvent {
 exports.handler = async (event: LambdaEvent) => { 
   // Verificar si el ID de la tarea esta presente en los parametros de la ruta
   const taskId = event.pathParameters?.taskId;
+  
   if (!taskId) { 
     return { 
       statusCode: 400,
       body: JSON.stringify({ error: 'Task ID is required' }),
     };
   }
-
-  // TODO: agregar una validacion si el taskID existe en la base de datos. 
-  // ? codigo helper aqui. 
+  
+  // validacion si el taskID existe en la base de datos. 
+  const isValidTaskId = await validateTaskId(taskId, process.env.TABLE_NAME!)
+  if (!isValidTaskId) { 
+    return { 
+      statusCode: 400,
+      body: JSON.stringify({ error: 'Task ID not found in the database' }),
+    }
+  }
 
   // Configurar los parametros para la consulta
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!,
     KeyConditionExpression: "taskId = :taskIdValue",
     ExpressionAttributeValues: { 
-      ":taskIdValue": taskId
+      ":taskIdValue": taskId 
     }
   };
 
