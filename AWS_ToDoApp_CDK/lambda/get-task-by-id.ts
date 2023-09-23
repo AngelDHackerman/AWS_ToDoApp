@@ -1,7 +1,7 @@
 
 // TODO: Refactor for dependency injection, now wer are crearting an instance of the DynamoDb table for each lambda function
 
-import { validateTaskId } from '../helpers/helpers';
+import { validateTaskId } from './helpers/helpers';
 import * as AWS from 'aws-sdk';
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
@@ -32,26 +32,25 @@ exports.handler = async (event: LambdaEvent) => {
   }
 
   // Configurar los parametros para la consulta
-  const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
+  const params: AWS.DynamoDB.DocumentClient.GetItemInput = { 
     TableName: process.env.TABLE_NAME!,
-    KeyConditionExpression: "taskId = :taskIdValue",
-    ExpressionAttributeValues: { 
-      ":taskIdValue": taskId 
+    Key: { 
+      "taskId": taskId,
     }
-  };
+  }
 
   try {
-    const result = await dynamo.query(params).promise()
-    if (result.Items && result.Items.length > 0) { 
+    const result = await dynamo.get(params).promise()
+    if (result.Item) { 
       return { 
         statusCode: 200,
-        body: JSON.stringify(result.Items[0]),
+        body: JSON.stringify(result.Item),
       };
     } else { 
       return { 
         statusCode: 404,
         body: JSON.stringify({ error: 'Task not found' }),
-      };
+      }
     }
   } catch (error) {
     const errMsg = (error as Error).message;

@@ -1,7 +1,7 @@
 
 // TODO: Refactor for dependency injection, now wer are crearting an instance of the DynamoDb table for each lambda function
 
-import { validateTaskId } from '../helpers/helpers';
+import { validateTaskId } from './helpers/helpers';
 import * as AWS from 'aws-sdk';
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
@@ -26,7 +26,13 @@ exports.handler = async (event: LambdaEvent) => {
   }
 
   // todo: Verificar si el taskId recibido existe en la base de datos
-  // ? codigo helper aqui. 
+  const isValidTaskId = await validateTaskId(taskId, process.env.TABLE_NAME!)
+  if (!isValidTaskId) { 
+    return { 
+      statusCode: 400,
+      body: JSON.stringify({ error: 'Task ID not found in the database' }),
+    }
+  }
 
   const params: AWS.DynamoDB.DocumentClient.UpdateItemInput = { 
     TableName: process.env.TABLE_NAME!,
