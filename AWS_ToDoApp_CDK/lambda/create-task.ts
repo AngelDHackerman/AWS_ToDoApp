@@ -14,7 +14,7 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event: LambdaEvent) => {
   const body = JSON.parse(event.body);
-  const { taskId, dueDate, status } = body;
+  const { taskId, dueDate, status, description } = body;
 
   // Verifica si el status proporcionado es valido, sino lanzara un error
   if (!Object.values(TaskStatus).includes(status)) {
@@ -29,8 +29,9 @@ exports.handler = async (event: LambdaEvent) => {
     Item: {
       taskId,
       dueDate,
+      description,
+      status: status || TaskStatus.PENDING,  // si no se proporciona un status, se establecera en 'peding' por defecto. 
       expiryDate: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // TTL de 7 días
-      status: status || TaskStatus.PENDING  // si no se proporciona un status, se establecera en 'peding' por defecto. 
     },
   };
 
