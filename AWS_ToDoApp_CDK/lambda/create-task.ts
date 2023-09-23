@@ -16,6 +16,14 @@ exports.handler = async (event: LambdaEvent) => {
   const body = JSON.parse(event.body);
   const { taskId, dueDate, status, description } = body;
 
+  // Validacion para taskId y dueDate
+  if (!taskId || !dueDate) { 
+    return { 
+      statusCode: 400,
+      body: JSON.stringify({ error: 'taskId and dueDate are required fields' }),
+    }
+  }
+
   // Verifica si el status proporcionado es valido, sino lanzara un error
   if (!Object.values(TaskStatus).includes(status)) {
     return {
