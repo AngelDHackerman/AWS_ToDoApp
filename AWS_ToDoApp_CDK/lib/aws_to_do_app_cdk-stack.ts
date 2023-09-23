@@ -50,5 +50,15 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
 
     // Otorgar permisos a la funcion getTaskById
     dynamoTable.table.grantReadData(getTaskByIdFunction);
+
+    // Definir la funcion 'update-task' que actualizara las tareas
+    const updateTaskByIdFunction = new lambda.Function(this, 'updateTaskByIdFunction', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'update-task.handler',
+      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
+      environment: {
+        TABLE_NAME: dynamoTable.table.tableName
+      }
+    })
   }
 }
