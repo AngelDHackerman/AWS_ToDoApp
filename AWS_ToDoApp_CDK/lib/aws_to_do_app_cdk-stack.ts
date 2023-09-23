@@ -63,5 +63,6 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
 
     // otorgar permisos a la funcion updateTaskById
     dynamoTable.table.grantWriteData(updateTaskByIdFunction)
+    dynamoTable.table.grantReadData(updateTaskByIdFunction);
   }
 }
