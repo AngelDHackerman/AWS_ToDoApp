@@ -26,7 +26,7 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     dynamoTable.table.grantWriteData(createTaskFunction);
 
     // Definir la nueva funcion Lambda 'get-task-by-status' (que busca porque query las task segun su status)
-    const getTaskFunction = new lambda.Function(this, 'GetTaskFunction', { 
+    const getTaskFunction = new lambda.Function(this, 'GetTaskByStatusFunction', { 
       runtime: lambda.Runtime.NODEJS_16_X,
       handler: 'get-task-by-status.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
