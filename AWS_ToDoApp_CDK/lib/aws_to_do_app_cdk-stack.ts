@@ -25,10 +25,10 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     // Otorgar permisos a la funcion Lambda para escribir en la tabla DynamoDB
     dynamoTable.table.grantWriteData(createTaskFunction);
 
-    // Definir la nueva funcion Lambda 'get-task' (que busca porque query las task segun su status)
+    // Definir la nueva funcion Lambda 'get-task-by-status' (que busca porque query las task segun su status)
     const getTaskFunction = new lambda.Function(this, 'GetTaskFunction', { 
       runtime: lambda.Runtime.NODEJS_16_X,
-      handler: 'get-task.handler',
+      handler: 'get-task-by-status.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
       environment: { 
         TABLE_NAME: dynamoTable.table.tableName

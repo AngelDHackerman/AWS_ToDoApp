@@ -3,7 +3,7 @@
 
 // TODO: Refactor for dependency injection, now wer are crearting an instance of the DynamoDb table for each lambda function
 
-import { TaskStatus } from "./task-status";
+import { TaskStatus } from "./utils/task-status";
 
 interface LambdaEvent {
   body: string;
