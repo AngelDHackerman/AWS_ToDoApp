@@ -58,7 +58,10 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
       environment: {
         TABLE_NAME: dynamoTable.table.tableName
-      }
-    })
+      },
+    });
+
+    // otorgar permisos a la funcion updateTaskById
+    dynamoTable.table.grantWriteData(updateTaskByIdFunction)
   }
 }
