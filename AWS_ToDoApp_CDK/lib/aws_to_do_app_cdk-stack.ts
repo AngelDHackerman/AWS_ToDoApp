@@ -4,6 +4,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 import { DynamoDBTable } from './dynamodb-table';  
+import { DynamoDBTableV2 } from '../DataBase/dynamoDb-table';  
 import * as path from 'path'; 
 
 export class AwsToDoAppCdkStack extends cdk.Stack {
