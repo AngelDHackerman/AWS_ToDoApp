@@ -4,7 +4,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 import { DynamoDBTable } from './dynamodb-table';  
-import { DynamoDBTableV2 } from '../DataBase/dynamoDb-table';  
+import { DynamoDBTableV2 } from './DataBase/dynamoDb-table';  // <- agregando nueva base de datos con nueva estructrura
 import * as path from 'path'; 
 
 export class AwsToDoAppCdkStack extends cdk.Stack {
@@ -12,6 +12,7 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     super(scope, id, props);
 
     const dynamoTable = new DynamoDBTable(this, 'DynamoDBTableConstruct');
+    const dynamoTableV2 = new DynamoDBTable(this, 'DynamoDBTableConstructV2');  
 
     // Creando la funcion 'create-task'
     const createTaskFunction = new lambda.Function(this, 'CreateTaskFunction', {  // está indicando que el código fuente para la función AWS Lambda CreateTaskFunction se encuentra en un directorio llamado lambda que está al mismo nivel que el directorio del archivo que contiene tu clase AwsToDoAppCdkStack. 
