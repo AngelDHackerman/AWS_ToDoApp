@@ -8,26 +8,29 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 interface LambdaEvent { 
   pathParameters?: {
     taskId?: string;
+    timeStamp?: string;
   };
 };
 
 exports.handler = async (event: LambdaEvent) => { 
   // Verificar si el ID de la tarea está presente en los parámetros de la ruta
   const taskId = event.pathParameters?.taskId;
+  const timeStamp = event.pathParameters?.timeStamp;
   
-  if (!taskId) { 
+  if (!taskId || !timeStamp) { 
     return { 
       statusCode: 400,
-      body: JSON.stringify({ error: 'Task ID is required' }),
+      body: JSON.stringify({ error: 'Both taskId and timeStamp are required' }),
     };
   }
 
   // Configurar los parámetros para la consulta
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!,
-    KeyConditionExpression: "taskId = :taskIdValue",
+    KeyConditionExpression: "taskId = :taskIdValue AND timeStamp = :timeStampValue",
     ExpressionAttributeValues: { 
-      ":taskIdValue": taskId 
+      ":taskIdValue": taskId,
+      ":timeStampValue": timeStamp,
     }
   };
 

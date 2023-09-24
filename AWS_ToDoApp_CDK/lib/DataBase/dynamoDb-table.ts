@@ -10,7 +10,7 @@ export class DynamoDBTableV2 extends Construct {
 
     this.table = new dynamodb.Table(this, 'ToDoTable', { 
       partitionKey: {name: 'taskId', type: dynamodb.AttributeType.STRING },
-      sortKey: {name: 'timeStamp', type: dynamodb.AttributeType.STRING},  // Cambiado de 'dueDate' a 'timeStamp'
+      sortKey: {name: 'timeStamp', type: dynamodb.AttributeType.STRING}, 
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,  
       removalPolicy: cdk.RemovalPolicy.DESTROY,  
       timeToLiveAttribute: 'expiryDate',  
@@ -23,11 +23,11 @@ export class DynamoDBTableV2 extends Construct {
     this.table.addGlobalSecondaryIndex({
       indexName: 'StatusIndex',  
       partitionKey: { name: 'status', type: dynamodb.AttributeType.STRING },  
-      sortKey: { name: 'timeStamp', type: dynamodb.AttributeType.STRING },  // Cambiado de 'dueDate' a 'timeStamp'
+      sortKey: { name: 'timeStamp', type: dynamodb.AttributeType.STRING }, 
       projectionType: dynamodb.ProjectionType.ALL, 
     });
 
-    // Opcional: Agregar un índice global secundario para el atributo 'dueDate' si aún necesitas hacer consultas basadas en esta propiedad
+    // Opcional: Agregar un índice global secundario para el atributo 'dueDate' para hacer consultas basadas en esta propiedad
     this.table.addGlobalSecondaryIndex({
       indexName: 'DueDateIndex',  
       partitionKey: { name: 'taskId', type: dynamodb.AttributeType.STRING },  
