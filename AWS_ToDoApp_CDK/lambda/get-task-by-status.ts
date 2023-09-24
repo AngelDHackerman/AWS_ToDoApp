@@ -42,10 +42,12 @@ exports.handler = async (event: LambdaEvent) => {
     IndexName: 'StatusIndex',
     KeyConditionExpression: '#statusAttribute = :statusValue', // Usamos un alias para "status"
     ExpressionAttributeNames: {
-        '#statusAttribute': 'status' // Definimos el alias
+        '#statusAttribute': 'status', // Definimos el alias de status
+        '#timeStampAttribute': 'timeStamp' // Añadido alias para timeStamp
     },
     ExpressionAttributeValues: {
-        ':statusValue': status // Aquí no usamos el alias, solo el valor
+        ':statusValue': status, // Aquí no usamos el alias, solo el valor
+        ':prefix': '2023'  // prefijo para el timeStamp
     }
 };
 
