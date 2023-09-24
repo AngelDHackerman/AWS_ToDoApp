@@ -36,6 +36,8 @@ exports.handler = async (event: LambdaEvent) => {
     };
   }
 
+  // Todo: Agregar validacion para ver si hay alguna tarea con el status pedido.
+
   // Configura los parametros para la consulta usando el GSI global secondary index
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!, 
@@ -43,11 +45,9 @@ exports.handler = async (event: LambdaEvent) => {
     KeyConditionExpression: '#statusAttribute = :statusValue', // Usamos un alias para "status"
     ExpressionAttributeNames: {
         '#statusAttribute': 'status', // Definimos el alias de status
-        '#timeStampAttribute': 'timeStamp' // Añadido alias para timeStamp
     },
     ExpressionAttributeValues: {
         ':statusValue': status, // Aquí no usamos el alias, solo el valor
-        ':prefix': '2023'  // prefijo para el timeStamp
     }
 };
 
