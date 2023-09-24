@@ -32,10 +32,13 @@ exports.handler = async (event: LambdaEvent) => {
     }
   }
 
+  const timeStamp = Date.now().toString(); // Añadido timeStamp como sort key
+
   const params = {
     TableName: process.env.TABLE_NAME, // El nombre de la tabla se pasa como variable de entorno
     Item: {
       taskId,
+      timeStamp,
       dueDate,
       description,
       status: status || TaskStatus.PENDING,  // si no se proporciona un status, se establecera en 'peding' por defecto. 
