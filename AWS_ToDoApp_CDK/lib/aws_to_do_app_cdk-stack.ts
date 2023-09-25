@@ -63,5 +63,18 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     // otorgar permisos a la funcion updateTaskById
     dynamoTableV2.table.grantWriteData(updateTaskByIdFunction)
     dynamoTableV2.table.grantReadData(updateTaskByIdFunction);
+
+    // Definir funcion 'delete-task' para eliminar tareas
+    const deleteTaskFunction = new lambda.Function(this, 'deleteTaskFunction', { 
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'delete-task.handler',
+      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
+      environment: { 
+        TABLE_NAME: dynamoTableV2.table.tableName
+      },
+    });
+
+    // Otorgar permisos a la función Lambda para eliminar elementos de la tabla DynamoDB
+    dynamoTableV2.table.grant(deleteTaskFunction, 'dynamodb:DeleteItem');
   }
 }
