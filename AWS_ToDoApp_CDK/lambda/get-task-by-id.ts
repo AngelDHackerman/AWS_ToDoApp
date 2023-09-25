@@ -27,7 +27,10 @@ exports.handler = async (event: LambdaEvent) => {
   // Configurar los parámetros para la consulta
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
     TableName: process.env.TABLE_NAME!,
-    KeyConditionExpression: "taskId = :taskIdValue AND timeStamp = :timeStampValue",
+    KeyConditionExpression: "taskId = :taskIdValue AND #timeStampAlias = :timeStampValue",
+    ExpressionAttributeNames: {
+      "#timeStampAlias": "timeStamp"  // Alias para evitar el uso de la palabra reservada
+    },
     ExpressionAttributeValues: { 
       ":taskIdValue": taskId,
       ":timeStampValue": timeStamp,

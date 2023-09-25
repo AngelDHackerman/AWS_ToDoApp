@@ -19,10 +19,10 @@ exports.handler = async (event: LambdaEvent) => {
   const { status, dueDate } = body;
 
   // Validacion si se recibe un taskId
-  if (!taskId || !timeStamp || !dueDate) { 
+  if (!taskId || !timeStamp) { 
     return { 
       statusCode: 400,
-      body: JSON.stringify( { error: 'Both taskId and dueDate are required'})
+      body: JSON.stringify( { error: 'Both taskId and timeStamp are required'})
     };
   }
 

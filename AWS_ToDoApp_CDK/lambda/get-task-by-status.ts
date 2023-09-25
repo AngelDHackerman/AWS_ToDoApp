@@ -36,7 +36,7 @@ exports.handler = async (event: LambdaEvent) => {
     };
   }
 
-  // Todo: Agregar validacion para ver si hay alguna tarea con el status pedido.
+  // Todo: Agregar validacion para ver si hay alguna tarea con el status pedido. Sino la hay dar un mensaje de alerta
 
   // Configura los parametros para la consulta usando el GSI global secondary index
   const params: AWS.DynamoDB.DocumentClient.QueryInput = { 
