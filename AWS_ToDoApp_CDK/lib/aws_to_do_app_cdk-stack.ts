@@ -3,6 +3,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { DynamoDBTableV2 } from './DataBase/dynamoDb-table';  // <- agregando nueva base de datos con nueva estructrura
 import * as path from 'path'; 
+import * as s3 from 'aws-cdk-lib/aws-s3';
 
 export class AwsToDoAppCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -76,5 +77,11 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
 
     // Otorgar permisos a la función Lambda para eliminar elementos de la tabla DynamoDB
     dynamoTableV2.table.grant(deleteTaskFunction, 'dynamodb:DeleteItem');
+
+    // Creando butcket S3 para la app React
+    const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
+      websiteIndexDocument: 'index.html',
+      publicReadAccess: true,
+    });
   }
 }
