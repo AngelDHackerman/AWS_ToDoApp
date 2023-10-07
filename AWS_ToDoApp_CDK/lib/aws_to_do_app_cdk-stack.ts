@@ -14,6 +14,12 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     // Refenciando el bucket S3 creado manualmente
     const existingBucket = s3.Bucket.fromBucketName(this, 'ImportedBucket', 'todo-website-bucket-angel')
 
+    // Referenciando la distribución de CloudFront creada manualmente
+    const existingDistribution = cloudfront.Distribution.fromDistributionAttributes(this, 'ImportedDistribution', {
+      distributionId: 'EG2VIJ33FYW43',
+      domainName: 'd1j0yzhmklmayh.cloudfront.net',
+    });
+
     const dynamoTableV2 = new DynamoDBTableV2(this, 'DynamoDBTableConstructV2');  // <- nuevo construct
 
     // Creando la funcion 'create-task'
