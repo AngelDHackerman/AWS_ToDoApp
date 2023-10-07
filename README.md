@@ -33,3 +33,15 @@
 * Otros atributos según las necesidades de tu aplicación.
 
 ### Para el frontEnd Tanto el Bucket S3 y cloudFront fueron creados manualmente por problemas con el Stack. 
+
+* __Bucket S3:__ contendra el codigo del frontEnd.
+
+* __cloud Front:__ sera usado por estos 4 motivos: 
+
+1. __Rendimiento:__ Reduce la latencia al almacenar copias del contenido más cerca del usuario.
+
+2. __Escalabilidad:__ Maneja eficientemente altos volúmenes de tráfico.
+
+3. __Seguridad:__ Ofrece protecciones como HTTPS y WAF (Web Application Firewall).
+
+4. __Costo:__ Puede reducir los costos de transferencia de datos y las solicitudes a tus servidores o buckets de S3.
