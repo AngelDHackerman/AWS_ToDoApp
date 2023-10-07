@@ -21,6 +21,8 @@
 
 * __Partition Key:__ `taskId` (string) - Un identificador único para cada tarea.
 
+* __Sort Key:__ `timeStamp`
+
 * __Attributes:__
 
 * `taskName` (string) - El nombre o descripción de la tarea.
@@ -30,42 +32,4 @@
 * `reminder` (string) - Una fecha y hora para enviar un recordatorio sobre la tarea.
 * Otros atributos según las necesidades de tu aplicación.
 
-### Orden de implementación sugerido:
-
-1. __Configuración de DynamoDB:__
-
-* Implementa el patrón Singleton para la conexión a DynamoDB.
-
-* Crea la tabla de DynamoDB programáticamente usando el SDK de AWS con la conexión Singleton.
-
-* Define los atributos y las claves de la tabla.
-
-2. __Funciones Lambda:__
-
-* Implementa la inyección de dependencia para inyectar la conexión de DynamoDB en las funciones.
-
-* Comienza con la función `createTask` para poder agregar tareas a tu base de datos.
-
-* Continúa con `getTasks` y `getTaskById` para poder leer las tareas.
-
-* Luego, implementa `updateTask` para modificar tareas.
-
-* Finalmente, implementa `deleteTask` para eliminar tareas.
-
-3. __API Gateway con Proxies:__
-
-* Crea un único recurso proxy en API Gateway (por ejemplo, `{proxy+}`) que capturará todas las rutas y métodos.
-
-* Integra este recurso proxy con una única función Lambda.
-
-* Dentro de esta función Lambda, en función de la ruta y el método HTTP, invoca la función Lambda correspondiente (por ejemplo, `createTask`, `getTasks`, etc.).
-
-4. __Integración:__
-
-* Asegúrate de que tu función Lambda proxy tenga los permisos necesarios para invocar otras funciones Lambda.
-
-* Configura los permisos para que API Gateway pueda invocar tu función Lambda proxy.
-
-5. __Pruebas:__
-
-* Realiza pruebas para asegurarte de que cada ruta y método funcione correctamente a través del proxy.
+### Para el frontEnd Tanto el Bucket S3 y cloudFront fueron creados manualmente por problemas con el Stack. 

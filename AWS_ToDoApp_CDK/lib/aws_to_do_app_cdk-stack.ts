@@ -11,6 +11,9 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    // Refenciando el bucket S3 creado manualmente
+    const existingBucket = s3.Bucket.fromBucketName(this, 'ImportedBucket', 'todo-website-bucket-angel')
+
     const dynamoTableV2 = new DynamoDBTableV2(this, 'DynamoDBTableConstructV2');  // <- nuevo construct
 
     // Creando la funcion 'create-task'
@@ -80,15 +83,16 @@ export class AwsToDoAppCdkStack extends cdk.Stack {
     // Otorgar permisos a la función Lambda para eliminar elementos de la tabla DynamoDB
     dynamoTableV2.table.grant(deleteTaskFunction, 'dynamodb:DeleteItem');
 
-    // Creando butcket S3 para la app React
-    const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
-      websiteIndexDocument: 'index.html',
-      publicReadAccess: true,
-    });
+    // // Creando butcket S3 para la app React
+    // const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
+    //   websiteIndexDocument: 'index.html',
+    //   publicReadAccess: true,
+    // });
 
-    // Creando una distribucion de cloudFront
-    const distribution = new cloudfront.Distribution(this, 'WebsiteDistribution', {
-      defaultBehavior: { origin: new origins.S3Origin(websiteBucket) },
-    });
+    // // Creando una distribucion de cloudFront
+    // const distribution = new cloudfront.Distribution(this, 'WebsiteDistribution', {
+    //   defaultBehavior: { origin: new origins.S3Origin(websiteBucket) },
+    // });
   }
 }
+
